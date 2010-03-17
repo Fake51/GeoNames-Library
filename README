@@ -1,0 +1,39 @@
+Introduction
+============
+This is a small PHP library to make querying geonames.org easy
+
+It makes use of SimpleXML - so make sure that's installed if
+you want to use this library (that should normally be the
+case, so just something to check if you're having problems).
+
+To use it, just include/require the geonames.php file - it
+contains all needed classes (just three, currently), so
+loading becomes easier with less overhead.
+
+Use
+===
+You'll normally want to either fetch data based on an id you
+already have or search using a search term. Examples for both:
+
+- searching using a term like 'New York'
+// $results_array will contain geonameId => GeoNameObject pairs
+$results_array = GeoNamesService::search('New York');
+
+- fetching an object using an id
+// $geoname is a GeoNameObject
+$geoname = GeoNamesService::get(1234567);
+
+GeoNamesObject comes with a couple of methods as well for
+getting hierarchy data. These are:
+
+- getParent()
+This will fetch a hierarchy and return it's closest parent. The
+data is cached, so subsequent calls incur little overhead. Note
+that the GeoNamesObjects return from GeoNamesService::hierarchy
+all have parents set.
+
+- getChildren()
+This will also fetch a hierarchy and return all it's children.
+Again, data is cached, so only the first call will issue a
+request to geonames. Also, all children that will be set will
+have the parent set as well.
